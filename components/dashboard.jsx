@@ -17,7 +17,7 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
   const [addNote, setaddNote] = useState(false);
   const [deleteNote, setdeleteNote] = useState(false);
   const [fetchedData, setFetchedData] = useState(null);
-
+  const [deleteid, setdeleteid] = useState('')
   useEffect(() => {
     axios
       .get(process.env.NEXT_PUBLIC_URL)
@@ -73,8 +73,10 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
           <h1 className="text-xl font-bold">Todays Notes</h1>
           <br></br>
           <div className="flex flex-col gap-4">
-            {notes?.map((note, key)=>{
-              return <Notecard key={key} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} />
+            {notes?.map((note)=>{
+              if(note.category == "today"){
+                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} />
+              }
             })}
           </div>
         </div>
@@ -82,19 +84,27 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
           <h1 className="text-xl font-bold">Tomorrows Notes</h1>
           <br></br>
           <div className="flex flex-col gap-4">
-            {/* <Notecard setaddNote={setaddNote} setdeleteNote={setdeleteNote} /> */}
+          {notes?.map((note)=>{
+              if(note.category == "tomorrow"){
+                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} />
+              }
+            })}
           </div>
         </div>
         <div className="bg-white p-5 rounded">
           <h1 className="text-xl font-bold">This Weeks Notes</h1>
           <br></br>
           <div className="flex flex-col gap-4">
-            {/* <Notecard setaddNote={setaddNote} setdeleteNote={setdeleteNote} /> */}
+          {notes?.map((note)=>{
+              if(note.category == "week"){
+                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} />
+              }
+            })}
           </div>
         </div>
       </div>
       {addNote ? <Addnote setaddNote={setaddNote} user={resend_username} /> : null}
-      {deleteNote ? <Deletenote setdeleteNote={setdeleteNote} /> : null}
+      {deleteNote ? <Deletenote setdeleteNote={setdeleteNote} note_id={deleteid}/> : null}
     </div>
   );
 };

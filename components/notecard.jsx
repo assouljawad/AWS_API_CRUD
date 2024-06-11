@@ -1,7 +1,7 @@
 import React from "react";
 import { CiStickyNote } from "react-icons/ci";
 
-function Notecard({ setaddNote, setdeleteNote, note }) {
+function Notecard({ setaddNote, setdeleteNote, note, setdeleteid}) {
   return (
     <div className="grid grid-cols-4 gap-2 items-center">
       <div className="flex gap-2 items-center">
@@ -23,6 +23,7 @@ function Notecard({ setaddNote, setdeleteNote, note }) {
         className="bg-black text-white p-2 w-[100px] rounded"
         onClick={() => {
           setdeleteNote(true);
+          setdeleteid(note.id)
         }}
       >
         Delete

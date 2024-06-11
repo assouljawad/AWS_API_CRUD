@@ -21,11 +21,6 @@ function Addnote({ setaddNote, user }) {
     user: user,
   };
   const handelsave = () => {
-    console.log(Title);
-    console.log(Category);
-    console.log(Note);
-    console.log(id);
-    console.log(user);
     axios.post(process.env.NEXT_PUBLIC_URL, body)
     .then(function (response) {
       toast.success("The Note Added Successfully");
