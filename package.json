@@ -13,6 +13,7 @@
     "amazon-cognito-identity-js": "^6.3.12",
     "aws-sdk": "^2.1636.0",
     "axios": "^1.7.2",
+    "git": "^0.1.5",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",

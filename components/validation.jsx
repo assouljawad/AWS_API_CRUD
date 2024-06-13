@@ -16,7 +16,7 @@ function Validation({ resend_username, setisloginpage, setisvalidationpage }) {
     try {
       const command = new ConfirmSignUpCommand({
         ClientId: clientId,
-        Username: username,
+        Username: resend_username,
         ConfirmationCode: confirmationCode,
       });
       await client.send(command);
@@ -48,6 +48,8 @@ function Validation({ resend_username, setisloginpage, setisvalidationpage }) {
           className="bg-zinc-200 p-2 rounded w-full"
           type="text"
           placeholder="Username"
+          disabled
+          value={resend_username}
           onChange={(e) => {
             setusername(e.target.value);
           }}

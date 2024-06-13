@@ -8,6 +8,7 @@ import Notecard from "@/components/notecard";
 import { useEffect, useState } from "react";
 import Addnote from "@/components/addnote";
 import Deletenote from "@/components/deletenote";
+import Editnote from "@/components/editnote"
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -18,6 +19,7 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
   const [deleteNote, setdeleteNote] = useState(false);
   const [fetchedData, setFetchedData] = useState(null);
   const [deleteid, setdeleteid] = useState('')
+  const [editnote, seteditnote] = useState(false)
   useEffect(() => {
     axios
       .get(process.env.NEXT_PUBLIC_URL)
@@ -28,7 +30,7 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
         toast.error(error.message);
         console.error("Error fetching data:", error);
       });
-  }, [addNote,deleteNote]);
+  }, [addNote,deleteNote, editnote]);
   const notes = fetchedData
   return (
     <div className="flex h-screen">
@@ -75,7 +77,7 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
           <div className="flex flex-col gap-4">
             {notes?.map((note)=>{
               if(note.category == "today"){
-                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} />
+                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} seteditnote={seteditnote}/>
               }
             })}
           </div>
@@ -86,7 +88,7 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
           <div className="flex flex-col gap-4">
           {notes?.map((note)=>{
               if(note.category == "tomorrow"){
-                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} />
+                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} seteditnote={seteditnote} />
               }
             })}
           </div>
@@ -97,7 +99,7 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
           <div className="flex flex-col gap-4">
           {notes?.map((note)=>{
               if(note.category == "week"){
-                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} />
+                return <Notecard key={note.id} setaddNote={setaddNote} setdeleteNote={setdeleteNote} note={note} setdeleteid={setdeleteid} seteditnote={seteditnote}/>
               }
             })}
           </div>
@@ -105,6 +107,7 @@ const Dashboard = ({ setisloginpage, setisAuth, resend_username}) => {
       </div>
       {addNote ? <Addnote setaddNote={setaddNote} user={resend_username} /> : null}
       {deleteNote ? <Deletenote setdeleteNote={setdeleteNote} note_id={deleteid}/> : null}
+      {editnote ? <Editnote seteditnote={seteditnote} user={resend_username} note_id={deleteid} /> : null}
     </div>
   );
 };

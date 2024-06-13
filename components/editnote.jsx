@@ -3,28 +3,26 @@ import React, { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdEditDocument } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
-import generateUUID from "@/utils/generateUUID";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-function Addnote({ setaddNote, user }) {
-  // dont forget to add the user with the post request !!!!!!!!!!!!!!!!!!!!!!
-  const id = generateUUID();
+function Editnote({ seteditnote, user, note_id}) {
   const [Title, setTitle] = useState("");
   const [Note, setNote] = useState("");
   const [Category, setCategory] = useState("");
   const body = {
-    id: id,
+    id:  note_id,
     title: Title,
     note: Note,
     category: Category,
     user: user,
   };
-  const handelsave = () => {
-    axios.post(process.env.NEXT_PUBLIC_URL, body)
+  const handeledit = () => {
+    console.log(body); 
+    axios.put(process.env.NEXT_PUBLIC_URL,body)
     .then(function (response) {
-      toast.success("The Note Added Successfully");
-      setaddNote(false)
+      toast.success("The Note Edited Successfully");
+      seteditnote(false)
     })
     .catch(function (error) {
       toast.error(error.message);
@@ -43,13 +41,13 @@ function Addnote({ setaddNote, user }) {
             <IoMdClose
               className="cursor-pointer text-2xl"
               onClick={() => {
-                setaddNote(false);
+                seteditnote(false);
               }}
             />
           </div>
         </div>
         <div className=" flex flex-col gap-4 mt-5">
-          <h1 className="text-xl font-bold">Add Note</h1>
+          <h1 className="text-xl font-bold">Edit Note</h1>
           <input
             className="bg-zinc-100 p-2 rounded w-full"
             type="text"
@@ -131,9 +129,9 @@ function Addnote({ setaddNote, user }) {
           <div className="flex justify-end">
             <button
               className="bg-black text-white p-2 w-[100px] rounded"
-              onClick={handelsave}
+              onClick={handeledit}
             >
-              Save
+              Edit
             </button>
           </div>
         </div>
@@ -142,4 +140,4 @@ function Addnote({ setaddNote, user }) {
   );
 }
 
-export default Addnote;
+export default Editnote;
